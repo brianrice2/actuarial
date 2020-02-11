@@ -28,7 +28,7 @@ The segment rates can also be viewed through shiny. To run, type in the followin
 
 ```
 library(shiny)
-runGitHub('Personal-Projects', username='brianrice2', subdir='Actuarial')
+runGitHub('actuarial', username='brianrice2')
 ```
 
 This looks at the app.R file in the directory and executes that code. There's more info and some cool examples on the [Shiny website][4]. This app has also been deployed to shinyapps.io at http://brianrice2.shinyapps.io/actuarial_rates -- you can use that link instead of booting up RStudio.
