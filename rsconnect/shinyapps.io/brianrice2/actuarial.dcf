@@ -1,0 +1,13 @@
+name: actuarial
+title: actuarial
+username:
+account: brianrice2
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1815135
+bundleId: 2802212
+url: https://brianrice2.shinyapps.io/actuarial/
+when: 1581723620.16219
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|actuarial_download only.R|actuarial_rates_dashboard.py|LICENSE|nonstabilized_rates.R|README.md|scrape_actuarial_rates.py|stabilized_rates.R|treasury_rates.R

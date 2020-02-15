@@ -14,18 +14,18 @@ scrape_rates <- function(skip_download = TRUE) {
   data <- data[order(data$Year, data$Month), ]
   
   # non-stabilized segment rates
-  data$`1st segment (nonstabilized)` <- round(rowMeans(data[, 4:13], na.rm=TRUE), 2)
-  data$`2nd segment (nonstabilized)` <- round(rowMeans(data[, 14:43], na.rm=TRUE), 2)
-  data$`3rd segment (nonstabilized)` <- round(rowMeans(data[, 44:123], na.rm=TRUE), 2)
+  data$`PBGC - 1st` <- round(rowMeans(data[, 4:13], na.rm=TRUE), 2)
+  data$`PBGC - 2nd` <- round(rowMeans(data[, 14:43], na.rm=TRUE), 2)
+  data$`PBGC - 3rd` <- round(rowMeans(data[, 44:123], na.rm=TRUE), 2)
   
   # stabilized segment rates
   data$`1st segment` <- round(rollapplyr(rowMeans(data[, 4:13], na.rm=TRUE), width=24, FUN=mean, partial=TRUE), 2)
   data$`2nd segment` <- round(rollapplyr(rowMeans(data[, 14:43], na.rm=TRUE), width=24, FUN=mean, partial=TRUE), 2)
   data$`3rd segment` <- round(rollapplyr(rowMeans(data[, 44:123], na.rm=TRUE), width=24, FUN=mean, partial=TRUE), 2)
   
-  data$`1st segment (nonstabilized)` <- format(data$`1st segment (nonstabilized)`, nsmall=2)
-  data$`2nd segment (nonstabilized)` <- format(data$`2nd segment (nonstabilized)`, nsmall=2)
-  data$`3rd segment (nonstabilized)` <- format(data$`3rd segment (nonstabilized)`, nsmall=2)
+  data$`PBGC - 1st` <- format(data$`PBGC - 1st`, nsmall=2)
+  data$`PBGC - 2nd` <- format(data$`PBGC - 2nd`, nsmall=2)
+  data$`PBGC - 3rd` <- format(data$`PBGC - 3rd`, nsmall=2)
 
   data$`1st segment` <- format(data$`1st segment`, nsmall=2)
   data$`2nd segment` <- format(data$`2nd segment`, nsmall=2)
@@ -43,7 +43,7 @@ scrape_rates <- function(skip_download = TRUE) {
   rownames(res) <- res$Date
   
   return(res[, c('Month', 'Year', 'Date', '1st segment','2nd segment','3rd segment',
-                 '1st segment (nonstabilized)', '2nd segment (nonstabilized)', '3rd segment (nonstabilized)')])
+                 'PBGC - 1st', 'PBGC - 2nd', 'PBGC - 3rd')])
 }
 
 df <- scrape_rates()
@@ -66,8 +66,11 @@ server <- function(input, output, session) {
       data <- data[data$Year == input$year, ]
     }
     data
-  }, options = list(pageLength = 12,
-                    columnDefs = list(list(visible=FALSE, targets=c(1, 2, 3))))))
+  }, 
+  options = list(pageLength = 12,
+                 columnDefs = list(list(visible=FALSE, targets=c(1, 2, 3)))
+                 )
+  ))
 }
 
 ui <- fluidPage(
