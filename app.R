@@ -29,9 +29,9 @@ scrape_rates <- function() {
                                                width = 24, FUN=mean, partial = TRUE), 2), nsmall = 2))
   
   # offset by 1 month
-  data$`1st segment` <- lag(data$`1st segment`, 1)
-  data$`2nd segment` <- lag(data$`2nd segment`, 1)
-  data$`3rd segment` <- lag(data$`3rd segment`, 1)
+  data$segment_1 <- lag(data$segment_1, 1)
+  data$segment_2 <- lag(data$segment_2, 1)
+  data$segment_3 <- lag(data$segment_3, 1)
   
   # return just the months and segment rates
   res = data %>% select(1, 2, 3, tail(names(.), 7))
@@ -51,7 +51,7 @@ df <- df[order(-df$Year, df$Month), ]
 df <- trim(df)
 
 # prevent us from seeing lots of NaN entries if we're not very far into the year
-df <- df[df$`1st segment` != 'NaN', ]
+df <- df[df$segment_1 != 'NaN', ]
 df[df == 'NaN'] <- '-'
 
 # underlying data connection for the shiny server
