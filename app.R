@@ -1,15 +1,16 @@
 # load packages
-library('tidyverse')
-library('gdata')
-library('zoo')
-library('shiny')
+library(tidyverse)
+library(gdata)
+library(zoo)
+library(shiny)
 
-scrape_rates <- function(skip_download = TRUE) {
+scrape_rates <- function() {
   #' Returns stabilized and nonstabilized segment rates for any year
-  if (!skip_download) {
-    source('./actuarial_download only.R')
-  }
-  data <- read.csv('rates_data.csv')
+  
+  # compile_historical_rates.R scrapes and cleans the data for us
+  source('./compile_historical_rates.R')
+  
+  data <- compile_historical_rates()
   data <- data[data$Year <= 2020, ]
   data <- data[order(data$Year, data$Month), ]
   
@@ -49,12 +50,15 @@ scrape_rates <- function(skip_download = TRUE) {
 df <- scrape_rates()
 rownames(df) <- df$Date
 df <- df[order(-df$Year, df$Month), ]
+
 # remove some unnecessary whitespace on the entries
 df <- trim(df)
+
 # prevent us from seeing lots of NaN entries if we're not very far into the year
 df <- df[df$`1st segment` != 'NaN', ]
 df[df == 'NaN'] <- '-'
 
+# connect the dataframe to shiny
 server <- function(input, output, session) {
   # Filter data based on selections
   output$table <- DT::renderDataTable(DT::datatable({
@@ -73,19 +77,23 @@ server <- function(input, output, session) {
   ))
 }
 
+# user interface for the shiny server
 ui <- fluidPage(
   titlePanel("Funding Yield Curve Segment Rates"),
   
   # Create a new row in the UI for selectInputs
   fluidRow(
-    # Dropdown for Month
+    # Dropdown for month
     column(4, selectInput("month", "Month:",
                           c("All", unique(as.character(df$Month))))),
-    # Dropdown for Year
+    
+    # Dropdown for year
     column(4, selectInput("year", "Year:",
                           c("All", unique(as.character(df$Year)))))),
+  
   # Create a new row for the table
   DT::dataTableOutput("table")
 )
 
-shinyApp(ui=ui, server=server)
+# create the server
+shinyApp(ui = ui, server = server)
