@@ -13,17 +13,16 @@ download_and_clean <- function(url) {
   # clean up data and rename columns
   data <- as.data.frame(t(data))
   colnames(data)[0] <- 'index'
-  colnames(data)[1] <- 'Year'
-  colnames(data)[2] <- 'Month'
+  colnames(data)[1:2] <- c('Year', 'Month')
   
   # duration time frames
   colnames(data)[3:202] <- sprintf("%s", seq(from=0.5, to=100, by=0.5))
   
-  data <- data[-1, ]
+  data <- data[-1, ] # drop the first row only
   data$Month <- match(data$Month, month.abb)
   data[] <- lapply(data, function(x) as.numeric(as.character(x)))
   data$Year <- zoo::na.locf(data$Year)
-  data$Date <- as.Date(paste(data$Year, data$Month, '1', sep='-'), '%Y-%m-%d')
+  data$Date <- as.Date(paste(data$Year, data$Month, '1', sep = '-'), '%Y-%m-%d')
   rownames(data) <- data$Date
   data$Date <- format(data$Date, '%b %Y')
   
@@ -38,7 +37,10 @@ compile_historical_rates <- function() {
                      list('04', '08'), list('09', '13'), list('14', '18'))
   
   for (pair in years_data) {
-    data_old <- download_and_clean(paste('http://www.treasury.gov/resource-center/economic-policy/corp-bond-yield/Documents/hqm_', pair[1], '_', pair[2], '.xls', sep=''))
+    data_old <- download_and_clean(paste('http://www.treasury.gov/resource-center/economic-policy/corp-bond-yield/Documents/hqm_',
+                                         pair[1], '_', pair[2], '.xls', sep = ''))
+    
+    # attach to existing dataframe
     data <- rbind(data, data_old)
   }
   
