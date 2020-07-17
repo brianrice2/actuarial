@@ -5,9 +5,9 @@ account: brianrice2
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1815135
-bundleId: 2802212
+bundleId: 3402075
 url: https://brianrice2.shinyapps.io/actuarial/
-when: 1581723620.16219
+when: 1594945115.19792
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: .RData|actuarial_download only.R|actuarial_rates_dashboard.py|LICENSE|nonstabilized_rates.R|README.md|scrape_actuarial_rates.py|stabilized_rates.R|treasury_rates.R
+ignoredFiles: .RData|actuarial_rates_dashboard.py|LICENSE|nonstabilized_rates.R|README.md|scrape_actuarial_rates.py|stabilized_rates.R|treasury_rates.R
