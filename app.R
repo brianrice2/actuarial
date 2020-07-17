@@ -8,7 +8,7 @@ scrape_rates <- function() {
   #' Returns stabilized and nonstabilized segment rates for any year
 
   # compile_historical_rates.R scrapes and cleans the data for us
-  source('./compile_historical_rates.R')
+  source("./compile_historical_rates.R")
   data <- compile_historical_rates()
 
   # limit scope to be the current year at latest
@@ -34,9 +34,8 @@ scrape_rates <- function() {
   data$segment_3 <- lag(data$segment_3, 1)
 
   # return just the months and segment rates
-  res = data %>% select(1, 2, 3, tail(names(.), 7))
+  res <- data %>% select(1, 2, 3, tail(names(.), 7))
   res <- res[order(-res$year, res$month), ]
-  # res <- format(res, digits=2, nsmall=2)
   rownames(res) <- res$date
 
   return(res[, c("month", "year", "date", "segment_1", "segment_2", "segment_3",
@@ -51,8 +50,8 @@ df <- df[order(-df$year, df$month), ]
 df <- trim(df)
 
 # prevent us from seeing lots of NaN entries if we're not very far into the year
-df <- df[df$segment_1 != 'NaN', ]
-df[df == 'NaN'] <- '-'
+df <- df[df$segment_1 != "NaN", ]
+df[df == "NaN"] <- "-"
 
 # underlying data connection for the shiny server
 server <- function(input, output, session) {
