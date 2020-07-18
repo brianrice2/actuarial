@@ -15,20 +15,20 @@ scrape_rates <- function(year, column_of_interest) {
   # load in html
   url <- paste("https://www.treasury.gov/resource-center/data-chart-center/interest-rates/Pages/TextView.aspx?data=yieldYear&year=",
                year, sep = "")
+  url <- url(url, "rb")
   webpage <- read_html(url)
+  on.exit(close(url)) # close any url connections when exiting the function
 
   # find the table we want
-  tbls <- html_nodes(webpage, "table")
   tbls_ls <- webpage %>% 
-    html_nodes("table") %>% 
-    .[2] %>% 
+    html_nodes("table") %>% # returns a list of lists
+    .[2] %>% # is there an easier way to select the right table?
     html_table(fill = TRUE)
 
   # manipulate the data a bit
   rates_data <- tbls_ls[[1]]
-  rates_data$date <- as.Date(rates_data$date, format = "%m/%d/%y")
-  rates_data$month <- months(rates_data$date)
-  rates_data$month <- factor(rates_data$month, levels = month.name)
+  rates_data$date <- as.Date(rates_data$Date, format = "%m/%d/%y")
+  rates_data$month <- factor(months(rates_data$date), levels = month.name)
 
   # when was the data last updated?
   last_updated <- format(tail(rates_data$date, 1), "%B %d, %Y")
@@ -40,10 +40,9 @@ scrape_rates <- function(year, column_of_interest) {
   avg_monthly_rates[, 2] <- format(avg_monthly_rates[, 2], digits = 3, format = "f")
   colnames(avg_monthly_rates) <- c("month", paste(column_of_interest, "rate"))
 
-  # close url connection and return our info
-  closeAllConnections()
+  
   cat(paste("Rates as of", last_updated, "\n\n"))
   return(avg_monthly_rates)
 }
 
-scrape_rates(2019, "30 yr")
+scrape_rates(2020, "30 yr")
