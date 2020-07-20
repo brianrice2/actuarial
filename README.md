@@ -1,6 +1,6 @@
 # Actuarial projects
 
-Small projects relating to actuarial valuations.
+Small projects relating to actuarial valuations. As of July 2020, this *is* a package so operates through functions as opposed to executing scripts.
 
 ## Basic outline
 
@@ -19,11 +19,11 @@ and stabilized rates here: https://www.irs.gov/retirement-plans/funding-yield-cu
 The segment rates can also be viewed through shiny. To run, type in the following in your local R session:
 
 ```
-library(shiny)
-runGitHub('actuarial', username = 'brianrice2')
+library(actuarial)
+run_shiny()
 ```
 
-This looks at the app.R file in the directory and executes that code. There's more info and some cool examples on the [Shiny website][4]. This app has also been deployed to shinyapps.io at http://brianrice2.shinyapps.io/actuarial_rates -- you can use this link instead of booting up RStudio.
+This is defined by the app.R file in `R/`. There's more info and some cool examples on the [Shiny website][4]. This app has also been deployed to shinyapps.io at http://brianrice2.shinyapps.io/actuarial_rates -- you can use this link instead of booting up RStudio.
 
 ## Behind the corporate bond rates
 
