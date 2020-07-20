@@ -1,0 +1,26 @@
+Package: actuarial
+Title: Organizes Interest Rates for Actuarial Valuations
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Brian",
+           family = "Rice",
+           role = c("aut", "cre"),
+           email = "brianrice013@gmail.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: This package scrapes and organizes actuarial interest rates,
+    specifically the IRS and PBGC stabilized, non-stabilized, and U.S.
+    Treasury rates for various durations. It also includes a Shiny app
+    which displays these rates by month and allows for filtering.
+License: use_mit_license()
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    dplyr,
+    gdata,
+    zoo,
+    shiny,
+    rvest,
+    lubridate,
+    xml2
