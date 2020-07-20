@@ -4,8 +4,6 @@ Small projects relating to actuarial valuations.
 
 ## Basic outline
 
-* actuarial_rates_dashboard.py
-  * Experimenting with Dash to replicate the Shiny functionality in R.
 * app.R
   * Shiny app for interacting with the stabilized and nonstabilized rates through a web browser.
   * Note there are a couple cases where we achieve different results from the IRS - for example, stabilized - March 2019, and nonstabilized - November 2018 and May 2013. This is because the IRS rounds simply while R rounds to the nearest even (banker's rounding). Maybe I'll implement this change in rounding but it's a very small impact.
