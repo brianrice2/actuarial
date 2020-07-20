@@ -2,26 +2,9 @@
 
 Small projects relating to actuarial valuations. As of July 2020, this *is* a package so operates through functions as opposed to executing scripts.
 
-## Basic outline
-
-* app.R
-  * Shiny app for interacting with the stabilized and nonstabilized rates through a web browser.
-  * Note there are a couple cases where we achieve different results from the IRS - for example, stabilized - March 2019, and nonstabilized - November 2018 and May 2013. This is because the IRS rounds simply while R rounds to the nearest even (banker's rounding). Maybe I'll implement this change in rounding but it's a very small impact.
-  * Note: The IRS publishes non-stabilized rates here: https://www.irs.gov/retirement-plans/minimum-present-value-segment-rates
-and stabilized rates here: https://www.irs.gov/retirement-plans/funding-yield-curve-segment-rates
-* compile_historical_rates.R
-  * Downloads and cleans historical HQM corporate bond yield curve information, provided on the Treasury's website.
-* treasury_rates.R
-  * Pulls and organizes treasury yield rates from the treasury website.
-
 ## Shiny
 
-The segment rates can also be viewed through shiny. To run, type in the following in your local R session:
-
-```
-library(actuarial)
-run_shiny()
-```
+The segment rates can also be viewed through shiny. To view, simply run `actuarial::run_shiny()`.
 
 This is defined by the app.R file in `R/`. There's more info and some cool examples on the [Shiny website][4]. This app has also been deployed to shinyapps.io at http://brianrice2.shinyapps.io/actuarial_rates -- you can use this link instead of booting up RStudio.
 
