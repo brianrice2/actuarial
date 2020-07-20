@@ -24,3 +24,7 @@ Imports:
     rvest,
     lubridate,
     xml2
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
